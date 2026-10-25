@@ -8,7 +8,6 @@ export default function DiscoverPage() {
   return (
     <>
       <PageHeader
-        section="Workspace"
         title="Find the right service to sell"
         description="Start with what you're good at. We will suggest specific service angles—not made-up order probabilities."
       />

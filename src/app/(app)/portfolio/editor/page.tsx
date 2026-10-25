@@ -1,15 +1,16 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowDown, ArrowUp, Eye, EyeOff, Globe } from "lucide-react"
+import { ArrowDown, ArrowRight, ArrowUp, Eye, EyeOff, Globe } from "lucide-react"
 import { toast } from "sonner"
 import { Field, controlClass } from "@/components/app/form-bits"
-import { PageHeader } from "@/components/app/page-header"
 import { usePortfolio } from "@/components/portfolio/portfolio-provider"
 import { SitePreview } from "@/components/portfolio/site-preview"
+import { StudioHeader } from "@/components/portfolio/studio-header"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
-import { ALL_SECTIONS, accentColors, getTheme, sectionLabels, themes } from "@/lib/portfolio/themes"
+import { ALL_SECTIONS, accentColors, sectionLabels } from "@/lib/portfolio/themes"
+import { useThemes } from "@/components/portfolio/themes-context"
 import type { Portfolio } from "@/lib/portfolio/types"
 import { cn } from "@/lib/utils"
 
@@ -28,6 +29,7 @@ const textFields: { key: keyof Portfolio; label: string; multiline?: boolean; ty
 
 export default function PortfolioEditorPage() {
   const { draft, update, save } = usePortfolio()
+  const { themes, getTheme } = useThemes()
   const [device, setDevice] = useState<"desktop" | "mobile">("desktop")
 
   function move(i: number, dir: -1 | 1) {
@@ -59,29 +61,30 @@ export default function PortfolioEditorPage() {
 
   return (
     <>
-      <PageHeader section="Portfolio websites" title="Portfolio editor" description="Personalize your content and see updates instantly.">
+      <StudioHeader eyebrow="Visual builder" title="Portfolio editor" description="Personalize your content and see updates instantly.">
         <div className="flex flex-wrap gap-2">
           <Button size="sm" variant="outline" onClick={() => save() && toast.success("Draft saved to this browser.")}>Save draft</Button>
           <Button size="sm" variant="outline" onClick={exportJSON}>Export data</Button>
           <Button
             size="sm"
+            variant="pine"
             onClick={() => {
               if (save({ ...draft, published: true })) toast("Preview marked ready. Public hosting is not connected yet.")
             }}
           >
-            <Globe data-icon="inline-start" /> Publish preview
+            <Globe data-icon="inline-start" /> Publish preview <ArrowRight data-icon="inline-end" />
           </Button>
         </div>
-      </PageHeader>
+      </StudioHeader>
 
       <div className="grid items-start gap-4 lg:grid-cols-[200px_minmax(0,1fr)] xl:grid-cols-[220px_minmax(0,1fr)_255px]">
-        <Card className="gap-3 px-4">
-          <h3 className="text-sm font-semibold">Page sections</h3>
+        <Card className="gap-3 rounded-[20px] px-4">
+          <h3 className="text-sm font-extrabold">Page sections</h3>
           <ul className="space-y-2">
             {draft.sections.map((s, i) => {
               const hidden = draft.hidden.includes(s)
               return (
-                <li key={s} className="flex items-center justify-between gap-1 rounded-[9px] border p-1.5 pl-3 text-xs">
+                <li key={s} className="flex items-center justify-between gap-1 rounded-xl border bg-ink-25 p-1.5 pl-3 text-xs font-semibold">
                   <span className={cn(hidden && "text-muted-foreground line-through")}>{sectionLabels[s]}</span>
                   <span className="flex text-primary">
                     <IconBtn label={`Move ${sectionLabels[s]} up`} onClick={() => move(i, -1)}><ArrowUp /></IconBtn>
@@ -102,12 +105,12 @@ export default function PortfolioEditorPage() {
           </Button>
         </Card>
 
-        <Card className="min-h-[540px] gap-3 bg-ink-100 px-4">
+        <Card className="min-h-[540px] gap-3 rounded-[20px] bg-ink-100 px-4">
           <div className="flex items-center justify-between text-xs text-muted-foreground">
-            <span>Live website preview</span>
+            <span className="font-semibold">Live website preview</span>
             <div className="flex gap-1.5" role="group" aria-label="Preview device">
               {(["desktop", "mobile"] as const).map((d) => (
-                <Button key={d} size="sm" variant={device === d ? "default" : "outline"} aria-pressed={device === d} onClick={() => setDevice(d)}>
+                <Button key={d} size="sm" variant={device === d ? "pine" : "outline"} aria-pressed={device === d} onClick={() => setDevice(d)}>
                   {d === "desktop" ? "Desktop" : "Mobile"}
                 </Button>
               ))}
@@ -116,8 +119,8 @@ export default function PortfolioEditorPage() {
           <SitePreview data={draft} device={device} />
         </Card>
 
-        <Card className="gap-4 px-4 lg:col-span-2 xl:col-span-1">
-          <h3 className="text-sm font-semibold">Customize design</h3>
+        <Card className="gap-4 rounded-[20px] px-4 lg:col-span-2 xl:col-span-1">
+          <h3 className="text-sm font-extrabold">Customize design</h3>
           {textFields.map(({ key, label, multiline, type }) => (
             <Field key={key} id={`edit-${key}`} label={label}>
               {multiline ? (
@@ -161,9 +164,9 @@ export default function PortfolioEditorPage() {
               <option>Manrope</option><option>Georgia</option><option>Arial</option>
             </select>
           </Field>
-          <div className="rounded-[10px] bg-ink-50 p-3 text-xs">
+          <div className="rounded-xl bg-brand-50 p-3 text-xs">
             <strong>Publishing status</strong>
-            <p className="mt-2">
+            <p className="mt-2 text-ink-600">
               {draft.published
                 ? "Preview ready — this is a local draft, not a publicly hosted website."
                 : "Draft — live hosting requires Supabase and deployment integration."}

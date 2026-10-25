@@ -11,6 +11,7 @@ const PROTECTED_PREFIXES = [
   "/growth-plan",
   "/tools",
   "/portfolio",
+  "/admin",
 ]
 const AUTH_PAGES = ["/login", "/signup"]
 

@@ -1,8 +1,10 @@
+"use client"
+
 /* eslint-disable @next/next/no-img-element -- user-supplied data URL preview */
 import type { CSSProperties, ReactNode } from "react"
 import { ArrowUpRight } from "lucide-react"
 import { CurrentYear } from "@/components/marketing/current-year"
-import { getTheme } from "@/lib/portfolio/themes"
+import { useThemes } from "./themes-context"
 import type { Portfolio, SectionId } from "@/lib/portfolio/types"
 import { cn } from "@/lib/utils"
 
@@ -15,7 +17,7 @@ const fontStacks: Record<Portfolio["font"], string> = {
 // Live preview of the generated portfolio site. React escapes all text, so
 // user input is safe to render (the prototype hand-escaped HTML strings).
 export function SitePreview({ data, device }: { data: Portfolio; device: "desktop" | "mobile" }) {
-  const theme = getTheme(data.theme)
+  const theme = useThemes().getTheme(data.theme)
   const mobile = device === "mobile"
   const heading = { fontFamily: fontStacks[data.font] }
   const skills = data.skills.split(",").map((s) => s.trim()).filter(Boolean)

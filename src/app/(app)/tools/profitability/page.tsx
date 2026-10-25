@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import type { z } from "zod"
 import { Calculator } from "lucide-react"
 import { Caveat, EmptyResult, Field, Metric, ResultPanel, ToolLayout, controlClass } from "@/components/app/form-bits"
+import { ProfitPreview } from "@/components/illustrations/previews"
 import { PageHeader } from "@/components/app/page-header"
 import { Button } from "@/components/ui/button"
 import { profit } from "@/lib/tools/demo-logic"
@@ -32,7 +33,6 @@ export default function ProfitabilityPage() {
   return (
     <>
       <PageHeader
-        section="Growth tools"
         title="Profit calculator"
         description="See what you actually earn per hour before accepting an order."
       />
@@ -60,7 +60,7 @@ export default function ProfitabilityPage() {
               <Caveat>Excludes taxes, currency conversion and extra revisions.</Caveat>
             </ResultPanel>
           ) : (
-            <EmptyResult icon={Calculator} title="Your estimate will appear here">
+            <EmptyResult icon={Calculator} title="Your estimate will appear here" preview={<ProfitPreview />}>
               Enter the price, your time and costs. The fee is an assumption you can change.
             </EmptyResult>
           )

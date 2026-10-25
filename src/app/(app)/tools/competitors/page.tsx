@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import type { z } from "zod"
 import { ScanSearch } from "lucide-react"
 import { BulletList, Caveat, EmptyResult, Field, ResultPanel, ToolLayout, controlClass } from "@/components/app/form-bits"
+import { CompetitorsPreview } from "@/components/illustrations/previews"
 import { PageHeader } from "@/components/app/page-header"
 import { Button } from "@/components/ui/button"
 import { positioningIdeas } from "@/lib/tools/demo-logic"
@@ -26,7 +27,6 @@ export default function CompetitorsPage() {
   return (
     <>
       <PageHeader
-        section="Growth tools"
         title="Competitor gaps"
         description="Compare your offer with competitor gigs you've found and look for a clearer angle."
       />
@@ -51,7 +51,7 @@ export default function CompetitorsPage() {
               <Caveat>Based only on the titles you entered. No live marketplace or demand data is used.</Caveat>
             </ResultPanel>
           ) : (
-            <EmptyResult icon={ScanSearch} title="Positioning ideas will appear here">
+            <EmptyResult icon={ScanSearch} title="Positioning ideas will appear here" preview={<CompetitorsPreview />}>
               Add your service and a few competing gig titles.
             </EmptyResult>
           )

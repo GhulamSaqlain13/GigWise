@@ -7,6 +7,7 @@ import type { z } from "zod"
 import { Copy, MessagesSquare, TriangleAlert } from "lucide-react"
 import { toast } from "sonner"
 import { Caveat, EmptyResult, Field, ResultPanel, ToolLayout, controlClass } from "@/components/app/form-bits"
+import { ReplyPreview } from "@/components/illustrations/previews"
 import { PageHeader } from "@/components/app/page-header"
 import { Button } from "@/components/ui/button"
 import { SCOPE_CLARIFICATION_REPLY, buyerMessageFlags } from "@/lib/tools/demo-logic"
@@ -40,7 +41,6 @@ export default function BuyerCoachPage() {
   return (
     <>
       <PageHeader
-        section="Growth tools"
         title="Buyer reply coach"
         description="Turn an unclear buyer message into a polite reply that pins down the scope."
       />
@@ -75,7 +75,7 @@ export default function BuyerCoachPage() {
               <Caveat>Edit it before sending. Gigwise never sends messages for you.</Caveat>
             </ResultPanel>
           ) : (
-            <EmptyResult icon={MessagesSquare} title="Your reply will appear here">
+            <EmptyResult icon={MessagesSquare} title="Your reply will appear here" preview={<ReplyPreview />}>
               Paste a buyer message. Gigwise also flags requests for passwords or moving off Fiverr.
             </EmptyResult>
           )

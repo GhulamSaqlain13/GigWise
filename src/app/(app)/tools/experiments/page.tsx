@@ -6,6 +6,7 @@ import type { z } from "zod"
 import { FlaskConical } from "lucide-react"
 import { toast } from "sonner"
 import { Caveat, EmptyResult, Field, ResultPanel, ToolLayout, controlClass } from "@/components/app/form-bits"
+import { ExperimentsPreview } from "@/components/illustrations/previews"
 import { PageHeader } from "@/components/app/page-header"
 import { Button } from "@/components/ui/button"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
@@ -37,7 +38,6 @@ export default function ExperimentsPage() {
   return (
     <>
       <PageHeader
-        section="Growth tools"
         title="Experiments"
         description="Log one gig change at a time with the numbers that followed, then compare."
       />
@@ -60,7 +60,7 @@ export default function ExperimentsPage() {
         }
         output={
           snapshots.length === 0 ? (
-            <EmptyResult icon={FlaskConical} title="No snapshots yet">
+            <EmptyResult icon={FlaskConical} title="No snapshots yet" preview={<ExperimentsPreview />}>
               Record what you changed and the numbers for the period after it.
             </EmptyResult>
           ) : (

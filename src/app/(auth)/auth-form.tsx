@@ -21,7 +21,7 @@ export function AuthForm({ mode, demoMode }: { mode: "login" | "signup"; demoMod
       <input type="hidden" name="next" value={params.get("next") ?? "/dashboard"} />
 
       {demoMode && (
-        <p className="rounded-[10px] bg-mint p-3 text-xs text-accent-foreground">
+        <p className="rounded-[10px] bg-accent p-3 text-xs text-accent-foreground">
           Demo mode: Supabase isn&apos;t configured, so sign-in is disabled.{" "}
           <Link href="/dashboard" className="font-semibold underline">
             Open the demo workspace
@@ -33,12 +33,12 @@ export function AuthForm({ mode, demoMode }: { mode: "login" | "signup"; demoMod
       {mode === "signup" && (
         <div className="space-y-2">
           <Label htmlFor="displayName">Your name</Label>
-          <Input id="displayName" name="displayName" autoComplete="name" required className="h-11" />
+          <Input id="displayName" name="displayName" autoComplete="name" required className="h-10" />
         </div>
       )}
       <div className="space-y-2">
         <Label htmlFor="email">Email</Label>
-        <Input id="email" name="email" type="email" autoComplete="email" required className="h-11" />
+        <Input id="email" name="email" type="email" autoComplete="email" required className="h-10" />
       </div>
       <div className="space-y-2">
         <Label htmlFor="password">Password</Label>
@@ -49,7 +49,7 @@ export function AuthForm({ mode, demoMode }: { mode: "login" | "signup"; demoMod
           autoComplete={mode === "login" ? "current-password" : "new-password"}
           minLength={8}
           required
-          className="h-11"
+          className="h-10"
         />
       </div>
 
@@ -68,18 +68,18 @@ export function AuthForm({ mode, demoMode }: { mode: "login" | "signup"; demoMod
         {pending ? "Please wait…" : mode === "login" ? "Sign in" : "Create free account"}
       </Button>
 
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="pt-2 text-center text-sm text-ink-soft">
         {mode === "login" ? (
           <>
             New to Gigwise?{" "}
-            <Link href="/signup" className="font-semibold text-primary">
+            <Link href="/signup" className="font-medium text-primary hover:text-primary-hover">
               Create an account
             </Link>
           </>
         ) : (
           <>
             Already have an account?{" "}
-            <Link href="/login" className="font-semibold text-primary">
+            <Link href="/login" className="font-medium text-primary hover:text-primary-hover">
               Sign in
             </Link>
           </>

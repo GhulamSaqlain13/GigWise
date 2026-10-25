@@ -34,7 +34,6 @@ export default function ThumbnailsPage() {
   return (
     <>
       <PageHeader
-        section="Growth tools"
         title="Thumbnail tester"
         description="See how your headline and image read at the size buyers see in search results."
       />

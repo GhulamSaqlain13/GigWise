@@ -7,6 +7,7 @@ import type { z } from "zod"
 import { ScanText } from "lucide-react"
 import { toast } from "sonner"
 import { BulletList, Caveat, EmptyResult, Field, ResultPanel, ToolLayout, controlClass } from "@/components/app/form-bits"
+import { AuditPreview } from "@/components/illustrations/previews"
 import { Button } from "@/components/ui/button"
 import { useLocalStore } from "@/lib/local-store"
 import { auditGigContent } from "@/lib/tools/demo-logic"
@@ -83,7 +84,7 @@ export function OptimizeForm() {
             <Caveat>Next: rewrite the title around one buyer problem, then check your thumbnail and packages.</Caveat>
           </ResultPanel>
         ) : (
-          <EmptyResult icon={ScanText} title="Your review will appear here">
+          <EmptyResult icon={ScanText} title="Your review will appear here" preview={<AuditPreview />}>
             Paste your gig title and description. Gigwise never logs in to Fiverr or fetches your gig.
           </EmptyResult>
         )

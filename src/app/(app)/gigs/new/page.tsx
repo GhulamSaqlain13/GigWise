@@ -9,7 +9,6 @@ export default function CreateGigPage() {
   return (
     <>
       <PageHeader
-        section="Workspace"
         title="Create a gig buyers understand"
         description="Define your offer, buyer problem and deliverables. Review and edit the draft before publishing."
       />
