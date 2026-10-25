@@ -5,57 +5,108 @@
 @custom-variant dark (&:is(.dark *));
 
 /*
- * Palette: two perceptually even OKLCH scales on hue 163 (emerald).
- *   brand-*  the green, used for actions, focus and highlights
- *   ink-*    near-neutral greys with a faint green cast for text, borders, surfaces
- * Use these scales (bg-brand-50, text-ink-500, ...) instead of hex values.
- * Semantic shadcn tokens below are mapped onto them.
+ * Palette (ref design, 2026-10-25): calm neutrals with a restrained emerald.
+ *   brand-*  emerald (primary = brand-600 ~ #217963, hover = brand-800 "emerald deep")
+ *   ink-*    text greys with a cool blue-slate cast (ink-900 ~ #172B35) and
+ *            near-neutral greens for borders/surfaces (ink-25..300)
+ * Emerald is reserved for primary actions, links, selected states and progress,
+ * never large surfaces. Use these scales instead of hex values.
  */
 @theme {
-  --color-brand-50: oklch(0.982 0.012 163);
-  --color-brand-100: oklch(0.958 0.026 163);
-  --color-brand-200: oklch(0.918 0.048 163);
-  --color-brand-300: oklch(0.857 0.076 163);
-  --color-brand-400: oklch(0.775 0.105 163);
-  --color-brand-500: oklch(0.672 0.12 163);
-  --color-brand-600: oklch(0.548 0.112 163);
-  --color-brand-700: oklch(0.468 0.094 163);
-  --color-brand-800: oklch(0.392 0.075 163);
-  --color-brand-900: oklch(0.322 0.058 163);
-  --color-brand-950: oklch(0.245 0.042 163);
+  --color-brand-50: oklch(0.975 0.012 162);
+  --color-brand-100: oklch(0.95 0.02 160);
+  --color-brand-200: oklch(0.905 0.042 162);
+  --color-brand-300: oklch(0.84 0.07 163);
+  --color-brand-400: oklch(0.74 0.095 164);
+  --color-brand-500: oklch(0.63 0.105 165);
+  --color-brand-600: oklch(0.53 0.1 165);
+  --color-brand-700: oklch(0.45 0.088 166);
+  --color-brand-800: oklch(0.37 0.075 168);
+  --color-brand-900: oklch(0.3 0.055 168);
+  --color-brand-950: oklch(0.21 0.02 168);
 
-  /* Soft off-white for surfaces: never pure #fff, slightly warm so it reads calm. */
-  --color-paper: oklch(0.991 0.005 140);
-  --color-canvas: oklch(0.968 0.007 150);
+  /* Surfaces: white cards on a barely-tinted canvas. */
+  --color-paper: oklch(1 0 0);
+  --color-canvas: oklch(0.984 0.003 165);
 
-  --color-ink-25: oklch(0.982 0.005 155);
-  --color-ink-50: oklch(0.972 0.005 163);
-  --color-ink-100: oklch(0.948 0.007 163);
-  --color-ink-200: oklch(0.918 0.009 163);
-  --color-ink-300: oklch(0.868 0.011 163);
-  --color-ink-400: oklch(0.73 0.013 163);
-  --color-ink-500: oklch(0.535 0.016 163);
-  --color-ink-600: oklch(0.47 0.018 163);
-  --color-ink-700: oklch(0.375 0.019 163);
-  --color-ink-800: oklch(0.29 0.018 163);
-  --color-ink-900: oklch(0.215 0.016 163);
+  --color-ink-25: oklch(0.975 0.004 165);
+  --color-ink-50: oklch(0.965 0.005 165);
+  --color-ink-100: oklch(0.95 0.006 165);
+  --color-ink-200: oklch(0.935 0.007 165);
+  --color-ink-300: oklch(0.88 0.01 165);
+  --color-ink-400: oklch(0.63 0.015 220);
+  --color-ink-500: oklch(0.52 0.02 220);
+  --color-ink-600: oklch(0.45 0.02 220);
+  --color-ink-700: oklch(0.37 0.025 230);
+  --color-ink-800: oklch(0.3 0.028 235);
+  --color-ink-900: oklch(0.25 0.03 240);
 
-  /* Type scale: Tailwind defaults (xs 12, sm 14, base 16, lg 18, xl 20, 2xl 24,
-     3xl 30, 4xl 36, 5xl 48) plus one compact UI size written as text-[13px].
+  /* Ref-design aliases */
+  --color-ink-soft: var(--color-ink-500);
+  --color-ink-faint: var(--color-ink-400);
+  --color-emerald-deep: var(--color-pine);
+  --color-border-strong: var(--color-ink-300);
+  --color-surface-dark: oklch(0.21 0.02 168);
+  --color-surface-dark-soft: oklch(0.26 0.02 168);
+
+  /* Landing page only ("Gigwise Landing Page" ref, 2026-10-25): sage canvas,
+     dark forest panels and a lime highlight. Not for the workspace. */
+  --color-sage: oklch(0.973 0.007 124);
+  --color-lime: oklch(0.915 0.15 121);
+  --color-lime-soft: oklch(0.962 0.038 115);
+  --color-lime-ink: oklch(0.327 0.065 124);
+  --color-mint-glow: oklch(0.798 0.095 165);
+  --color-forest: oklch(0.26 0.039 170);
+  --color-forest-ink: oklch(0.222 0.025 173);
+  --color-forest-soft: oklch(0.322 0.041 170);
+  --color-forest-muted: oklch(0.78 0.025 167);
+  --color-forest-fg: oklch(0.864 0.016 167);
+
+  /* Workspace shell ("Gigwise Dashboard Redesign" ref, 2026-10-25): active nav
+     item, overview hero and primary dark buttons. Shares sage + lime above. */
+  --color-pine: oklch(0.318 0.054 170);
+  --color-pine-soft: oklch(0.379 0.064 169);
+  /* Default button fill: the dark green (--dark #164d40) from
+     Gigwise_Combined_Landing_and_Portfolio.html. Hover goes to pine. */
+  --color-evergreen: oklch(0.38 0.061 174);
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float 7s ease-in-out -2s infinite;
+  --animate-marquee: marquee 40s linear infinite;
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  /* Type scale: Tailwind defaults plus text-[13px] / text-[11px] for compact UI.
      Don't add named custom sizes: cn()/tailwind-merge treats unknown text-* names
      as colours and drops them when a colour class is also present. */
 
-  --shadow-card: 0 1px 2px oklch(0.322 0.058 163 / 0.05), 0 1px 1px oklch(0.322 0.058 163 / 0.03);
-  --shadow-raised: 0 12px 32px -12px oklch(0.322 0.058 163 / 0.18), 0 2px 6px oklch(0.322 0.058 163 / 0.04);
+  --shadow-card: 0 1px 2px oklch(0.25 0.03 165 / 0.04);
+  --shadow-raised: 0 1px 2px oklch(0.25 0.03 165 / 0.04), 0 24px 64px -24px oklch(0.25 0.03 165 / 0.18);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-manrope), var(--font-inter), sans-serif;
+  --font-heading: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-jakarta), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, monospace;
+  /* Landing page: Inter Tight body/headings, Instrument Serif italic accents. */
+  --font-landing: var(--font-inter-tight), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument), Georgia, serif;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -106,37 +157,37 @@
   --card-foreground: var(--color-ink-900);
   --popover: var(--color-paper);
   --popover-foreground: var(--color-ink-900);
-  --primary: var(--color-brand-600);
-  --primary-hover: var(--color-brand-700);
-  --primary-foreground: #ffffff;
-  --secondary: var(--color-brand-50);
-  --secondary-foreground: var(--color-brand-700);
-  --muted: oklch(0.955 0.008 155);
+  --primary: var(--color-evergreen);
+  --primary-hover: var(--color-pine);
+  --primary-foreground: oklch(0.99 0.005 165);
+  --secondary: var(--color-ink-50);
+  --secondary-foreground: var(--color-ink-900);
+  --muted: var(--color-ink-50);
   --muted-foreground: var(--color-ink-500);
-  --accent: var(--color-brand-50);
-  --accent-foreground: var(--color-brand-700);
-  --destructive: oklch(0.55 0.17 25);
-  --success: var(--color-brand-600);
-  --warning: oklch(0.58 0.12 65);
-  --soft: oklch(0.955 0.008 155);
+  --accent: var(--color-brand-100);
+  --accent-foreground: var(--color-brand-800);
+  --destructive: oklch(0.58 0.2 25);
+  --success: oklch(0.55 0.11 160);
+  --warning: oklch(0.68 0.13 70);
+  --soft: var(--color-ink-50);
   --mint: var(--color-brand-100);
   --border: var(--color-ink-200);
-  --input: var(--color-ink-300);
-  --ring: var(--color-brand-400);
-  --chart-1: var(--color-brand-600);
-  --chart-2: var(--color-brand-400);
-  --chart-3: var(--color-brand-200);
-  --chart-4: var(--color-ink-500);
-  --chart-5: var(--color-ink-300);
+  --input: var(--color-ink-200);
+  --ring: var(--color-brand-600);
+  --chart-1: oklch(0.53 0.1 165);
+  --chart-2: oklch(0.6 0.11 230);
+  --chart-3: oklch(0.68 0.13 70);
+  --chart-4: oklch(0.45 0.06 280);
+  --chart-5: oklch(0.55 0.12 20);
   --radius: 0.625rem;
   --sidebar: var(--color-paper);
-  --sidebar-foreground: var(--color-ink-700);
-  --sidebar-primary: var(--color-brand-600);
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: var(--color-brand-50);
+  --sidebar-foreground: var(--color-ink-500);
+  --sidebar-primary: var(--color-evergreen);
+  --sidebar-primary-foreground: oklch(0.99 0.005 165);
+  --sidebar-accent: var(--color-brand-100);
   --sidebar-accent-foreground: var(--color-brand-800);
   --sidebar-border: var(--color-ink-200);
-  --sidebar-ring: var(--color-brand-400);
+  --sidebar-ring: var(--color-brand-600);
 }
 
 /* Dark tokens (light-first; no toggle built yet) */
@@ -183,11 +234,25 @@
   }
   html {
     @apply font-sans;
+    scroll-behavior: smooth;
+  }
+  body {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
   ::selection {
-    background: var(--color-brand-200);
-    color: var(--color-brand-950);
+    background-color: color-mix(in oklab, var(--color-primary) 18%, transparent);
   }
+}
+
+/* Dot-grid textures for the landing page. */
+@utility bg-dots {
+  background-image: radial-gradient(color-mix(in oklab, var(--color-brand-700) 22%, transparent) 1.1px, transparent 1.3px);
+  background-size: 22px 22px;
+}
+@utility bg-dots-light {
+  background-image: radial-gradient(oklch(1 0 0 / 13%) 1.1px, transparent 1.3px);
+  background-size: 22px 22px;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -199,3 +264,4 @@
     scroll-behavior: auto !important;
   }
 }
+

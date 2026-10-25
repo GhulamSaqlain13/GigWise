@@ -8,7 +8,6 @@ export default function OptimizePage() {
   return (
     <>
       <PageHeader
-        section="Workspace"
         title="Find opportunities to improve your gig"
         description="Paste your gig content. A URL is stored as a reference only; Gigwise does not fetch Fiverr."
       />

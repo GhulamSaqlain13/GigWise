@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import type { z } from "zod"
 import { Activity } from "lucide-react"
 import { Caveat, EmptyResult, Field, Metric, ResultPanel, ToolLayout, controlClass } from "@/components/app/form-bits"
+import { FunnelPreview } from "@/components/illustrations/previews"
 import { PageHeader } from "@/components/app/page-header"
 import { Button } from "@/components/ui/button"
 import { diagnoseFunnel } from "@/lib/tools/demo-logic"
@@ -29,7 +30,6 @@ export default function GigDoctorPage() {
   return (
     <>
       <PageHeader
-        section="Growth tools"
         title="Gig Problem Doctor"
         description="Use your own numbers from Fiverr analytics to see which stage needs attention."
       />
@@ -57,7 +57,7 @@ export default function GigDoctorPage() {
               <Caveat>These rules are illustrative, not Fiverr benchmarks. Small numbers can swing a lot.</Caveat>
             </ResultPanel>
           ) : (
-            <EmptyResult icon={Activity} title="Your diagnosis will appear here">
+            <EmptyResult icon={Activity} title="Your diagnosis will appear here" preview={<FunnelPreview />}>
               Enter impressions, clicks and orders for the same date range.
             </EmptyResult>
           )

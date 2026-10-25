@@ -1,20 +1,19 @@
 import type { ReactNode } from "react"
 
-export function PageHeader({ section, title, description, children }: {
-  /** Nav section the page belongs to, e.g. "Growth tools". */
-  section: string
+// The nav section is shown in the topbar breadcrumb, so the header is just
+// title, description and optional actions.
+export function PageHeader({ title, description, children }: {
   title: ReactNode
   description?: ReactNode
   children?: ReactNode
 }) {
   return (
-    <div className="mb-7 flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
-      <div className="max-w-2xl">
-        <p className="mb-1 text-[13px] font-medium text-muted-foreground">{section}</p>
-        <h1 className="text-2xl font-semibold tracking-[-0.02em] md:text-[1.75rem]">{title}</h1>
-        {description && <p className="mt-1.5 text-sm text-muted-foreground">{description}</p>}
+    <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+      <div className="min-w-0 max-w-2xl">
+        <h1 className="font-display text-[28px] leading-tight font-bold tracking-tight text-foreground">{title}</h1>
+        {description && <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">{description}</p>}
       </div>
-      {children}
+      {children && <div className="flex shrink-0 items-center gap-2">{children}</div>}
     </div>
   )
 }

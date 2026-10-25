@@ -2,23 +2,28 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import type { ReactNode } from "react"
 import { ArrowLeft } from "lucide-react"
 import { Logo } from "@/components/logo"
-import { isActive, navSections } from "@/lib/nav"
+import { isActive } from "@/lib/nav"
 import { cn } from "@/lib/utils"
+import { useNav } from "./nav-context"
 
 const itemClass =
-  "flex h-9 items-center gap-2.5 rounded-lg px-2.5 text-[13px] font-medium text-sidebar-foreground transition-colors hover:bg-muted hover:text-foreground"
+  "flex items-center gap-2.5 rounded-[10px] p-2.5 text-sm font-medium transition-colors"
 
 export function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const pathname = usePathname()
+  const { sections } = useNav()
 
   return (
-    <div className="flex flex-col gap-5">
-      {navSections.map((section) => (
+    <div className="space-y-[18px]">
+      {sections.map((section) => (
         <div key={section.title}>
-          <p className="mb-1 px-2.5 text-xs font-medium text-muted-foreground/80">{section.title}</p>
-          <nav aria-label={section.title} className="flex flex-col gap-px">
+          <p className="px-2.5 pb-1.5 text-[11px] font-bold tracking-[0.08em] text-ink-soft uppercase">
+            {section.title}
+          </p>
+          <nav aria-label={section.title} className="space-y-px">
             {section.items.map(({ href, label, icon: Icon }) => {
               const active = isActive(pathname, href)
               return (
@@ -27,9 +32,12 @@ export function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
                   href={href}
                   onClick={onNavigate}
                   aria-current={active ? "page" : undefined}
-                  className={cn(itemClass, active && "bg-accent text-accent-foreground hover:bg-accent hover:text-accent-foreground")}
+                  className={cn(
+                    itemClass,
+                    active ? "bg-pine font-semibold text-white" : "text-ink-700 hover:bg-ink-50 hover:text-foreground",
+                  )}
                 >
-                  <Icon className={cn("size-4 shrink-0", active ? "text-primary" : "text-muted-foreground")} aria-hidden />
+                  <Icon className={cn("size-[18px] shrink-0", active ? "text-lime" : "text-ink-soft")} aria-hidden />
                   {label}
                 </Link>
               )
@@ -37,23 +45,38 @@ export function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
           </nav>
         </div>
       ))}
-      <Link href="/" onClick={onNavigate} className={cn(itemClass, "text-muted-foreground")}>
-        <ArrowLeft className="size-4 shrink-0" aria-hidden />
+      <Link href="/" onClick={onNavigate} className={cn(itemClass, "text-ink-soft hover:bg-ink-50 hover:text-foreground")}>
+        <ArrowLeft className="size-[18px] shrink-0" aria-hidden />
         Back to website
       </Link>
     </div>
   )
 }
 
-export function Sidebar() {
+/** Sidebar body, shared by the desktop rail and the mobile drawer. */
+export function SidebarPanel({ footer, onNavigate, className }: {
+  footer?: ReactNode
+  onNavigate?: () => void
+  className?: string
+}) {
   return (
-    <aside className="sticky top-0 hidden h-screen w-[248px] shrink-0 flex-col border-r bg-sidebar lg:flex">
-      <div className="flex h-16 shrink-0 items-center border-b px-5">
-        <Logo href="/dashboard" />
+    // The whole panel scrolls as one, so the footer card never squeezes the nav.
+    <div className={cn("flex h-full w-[248px] flex-col overflow-y-auto bg-card", className)}>
+      <div className="flex h-[72px] shrink-0 items-center px-6">
+        <Logo href="/dashboard" size="lg" />
       </div>
-      <div className="flex-1 overflow-y-auto px-3 py-5">
-        <NavLinks />
+      <div className="px-4 pb-6">
+        <NavLinks onNavigate={onNavigate} />
       </div>
+      {footer && <div className="mt-auto px-4 pb-4">{footer}</div>}
+    </div>
+  )
+}
+
+export function Sidebar({ footer }: { footer?: ReactNode }) {
+  return (
+    <aside className="sticky top-0 hidden h-dvh shrink-0 border-r lg:block">
+      <SidebarPanel footer={footer} />
     </aside>
   )
 }

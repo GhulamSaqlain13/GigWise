@@ -9,7 +9,7 @@
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
-
+/docs
 # testing
 /coverage
 
@@ -40,3 +40,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local admin settings in demo mode
+/.data
+
+# local design references (kept out of the repo, like /docs)
+/ref.lnk
+/Gigwise Landing Page.html
+/Gigwise_Combined_Landing_and_Portfolio.html

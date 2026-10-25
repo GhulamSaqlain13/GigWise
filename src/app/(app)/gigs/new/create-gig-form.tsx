@@ -8,6 +8,7 @@ import type { z } from "zod"
 import { Copy, FilePlus2 } from "lucide-react"
 import { toast } from "sonner"
 import { Caveat, EmptyResult, Field, ResultPanel, ToolLayout, controlClass } from "@/components/app/form-bits"
+import { GigPreview } from "@/components/illustrations/previews"
 import { Button } from "@/components/ui/button"
 import { useLocalStore } from "@/lib/local-store"
 import { draftGig, packagePrices } from "@/lib/tools/demo-logic"
@@ -104,7 +105,7 @@ export function CreateGigForm() {
             <Caveat>Check Fiverr&apos;s current title and description limits before publishing. Gigwise never publishes for you.</Caveat>
           </ResultPanel>
         ) : (
-          <EmptyResult icon={FilePlus2} title="Your gig draft will appear here">
+          <EmptyResult icon={FilePlus2} title="Your gig draft will appear here" preview={<GigPreview />}>
             Describe your service and the buyer problem it solves. You can edit every part of the draft.
           </EmptyResult>
         )

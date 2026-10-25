@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import type { z } from "zod"
 import { ArrowRight, Compass, FilePlus2 } from "lucide-react"
 import { Caveat, EmptyResult, Field, ResultPanel, ToolLayout, controlClass } from "@/components/app/form-bits"
+import { IdeasPreview } from "@/components/illustrations/previews"
 import { Button } from "@/components/ui/button"
 import { splitSkills, suggestServices } from "@/lib/tools/demo-logic"
 import { discoverSchema } from "@/lib/tools/schemas"
@@ -71,7 +72,7 @@ export function DiscoverForm() {
             </p>
           </ResultPanel>
         ) : (
-          <EmptyResult icon={Compass} title="Your service ideas will appear here">
+          <EmptyResult icon={Compass} title="Your service ideas will appear here" preview={<IdeasPreview />}>
             Add a few skills and choose a goal to get specific service angles to explore.
           </EmptyResult>
         )
